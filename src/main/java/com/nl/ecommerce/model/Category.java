@@ -9,7 +9,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long categoryId;
     private String name;
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "products")
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products;
 
     public Category(Long categoryId, String name) {

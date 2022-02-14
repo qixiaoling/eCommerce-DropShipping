@@ -12,8 +12,10 @@ public class Product {
     private String description;
     private int inStock;
     private double price;
+
     @ManyToOne
     private Category category;
+
     @OneToMany (mappedBy = "product")
     private List<Cart_Items> items;
 
