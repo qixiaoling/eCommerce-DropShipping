@@ -21,6 +21,9 @@ public class Product {
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "product")
     private List<Cart_Items> items = new ArrayList<>();
 
+    public Product() {
+    }
+
     public Product(String name, String description, int inStock,
                    double price ) {
         this.name = name;

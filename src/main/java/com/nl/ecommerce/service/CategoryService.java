@@ -27,7 +27,7 @@ public class CategoryService {
     }
     public ResponseEntity<?> addCategory(Category category) {
         if(!(category.getName() == null)){
-            if(categoryRepository.existsByCategoryId(category.getCategoryId()).equals(Boolean.FALSE)){
+            if(categoryRepository.existsByName(category.getName()).equals(Boolean.FALSE)){
                 categoryRepository.save(category);
                 return ResponseEntity.ok().body("The category is now added.");
             }else{

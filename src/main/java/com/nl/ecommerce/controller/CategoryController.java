@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/categories")
 public class CategoryController {
     @Autowired
     private  CategoryService categoryService;
@@ -17,11 +17,11 @@ public class CategoryController {
     public CategoryController(CategoryService categoryService){
         this.categoryService = categoryService;
     }
-    @GetMapping("/categories")
+    @GetMapping("/getting")
     public ResponseEntity<?> getAllCategory(){
         return categoryService.getAllCategory();
     }
-    @PostMapping("/categories")
+    @PostMapping("/adding")
     public ResponseEntity<?> addCategory(@RequestBody Category category){
         return categoryService.addCategory(category);
     }
