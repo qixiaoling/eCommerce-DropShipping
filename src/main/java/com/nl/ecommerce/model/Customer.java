@@ -4,9 +4,11 @@ import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,11 +23,10 @@ public class Customer {
     private String phoneNumber;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
-    private List<Cart_Items> items;
+    private List<Cart_Items> items = new ArrayList<>();
 
-    public Customer(String firstName, String lastName, String address_street,
-                    String address_zipCode, String address_city, String address_country,
-                    String email, String phoneNumber, List<Cart_Items> items) {
+    public Customer(String firstName, String lastName, String address_street, String address_zipCode,
+                    String address_city, String address_country, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address_street = address_street;
@@ -34,7 +35,6 @@ public class Customer {
         this.address_country = address_country;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.items = items;
     }
 
 

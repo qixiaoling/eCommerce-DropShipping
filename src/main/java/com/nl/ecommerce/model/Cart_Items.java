@@ -8,32 +8,34 @@ import javax.persistence.*;
 @Table
 @EqualsAndHashCode
 public class Cart_Items {
-    @EmbeddedId
-    private Cart_Composite_ID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="middle_table_primary_id")
+    private Long id;
     @Column
     private Integer quantity;
 
-    @MapsId("customerid")
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Customer customer;
-    @MapsId("productid")
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
     private Product product;
 
     public Cart_Items() {
     }
 
-    public Cart_Items(Customer customer, Product product) {
+    public Cart_Items(Integer quantity, Customer customer, Product product) {
+        this.quantity = quantity;
         this.customer = customer;
         this.product = product;
-        this.id = new Cart_Composite_ID(customer.getCustomerId(), product.getProductId());
     }
 
-    public Cart_Composite_ID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Cart_Composite_ID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

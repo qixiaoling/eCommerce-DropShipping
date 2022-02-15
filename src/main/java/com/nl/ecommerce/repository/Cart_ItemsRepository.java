@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Cart_ItemsRepository extends JpaRepository <Cart_Items, Cart_Composite_ID> {
+public interface Cart_ItemsRepository extends JpaRepository <Cart_Items, Long> {
     @Override
-    void deleteById (Cart_Composite_ID id);
+    void deleteById (Long id);
 }
