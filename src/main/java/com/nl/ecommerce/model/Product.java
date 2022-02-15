@@ -19,7 +19,7 @@ public class Product {
     @OneToMany (mappedBy = "product")
     private List<Cart_Items> items;
 
-    public Product(Long productId, String name, String description, int inStock,
+    public Product(String name, String description, int inStock,
                    double price, Category category, List<Cart_Items> items) {
         this.productId = productId;
         this.name = name;
