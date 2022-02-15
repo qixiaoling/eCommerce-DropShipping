@@ -20,14 +20,12 @@ public class Product {
     private List<Cart_Items> items;
 
     public Product(String name, String description, int inStock,
-                   double price, Category category, List<Cart_Items> items) {
-        this.productId = productId;
+                   double price ) {
         this.name = name;
         this.description = description;
         this.inStock = inStock;
         this.price = price;
-        this.category = category;
-        this.items = items;
+
     }
 
 
