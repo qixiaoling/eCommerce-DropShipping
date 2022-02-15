@@ -1,19 +1,21 @@
 package com.nl.ecommerce.model;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import java.util.List;
-
+@Table
 @Entity
+@EqualsAndHashCode
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long categoryId;
     private String name;
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "products")
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products;
 
-    public Category(Long categoryId, String name) {
-        this.categoryId = categoryId;
+    public Category(String name) {
         this.name = name;
     }
 

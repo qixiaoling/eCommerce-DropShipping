@@ -23,10 +23,9 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
     private List<Cart_Items> items;
 
-    public Customer(Long customerId, String firstName, String lastName, String address_street,
+    public Customer(String firstName, String lastName, String address_street,
                     String address_zipCode, String address_city, String address_country,
                     String email, String phoneNumber, List<Cart_Items> items) {
-        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address_street = address_street;

@@ -23,11 +23,10 @@ public class Cart_Items {
     public Cart_Items() {
     }
 
-    public Cart_Items(Cart_Composite_ID id, Integer quantity, Customer customer, Product product) {
-        this.id = id;
-        this.quantity = quantity;
+    public Cart_Items(Customer customer, Product product) {
         this.customer = customer;
         this.product = product;
+        this.id = new Cart_Composite_ID(customer.getCustomerId(), product.getProductId());
     }
 
     public Cart_Composite_ID getId() {
