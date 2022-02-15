@@ -1,12 +1,13 @@
 package com.nl.ecommerce.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
     private String name;
     private String description;
@@ -16,8 +17,8 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    @OneToMany (mappedBy = "product")
-    private List<Cart_Items> items;
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Cart_Items> items = new ArrayList<>();
 
     public Product(String name, String description, int inStock,
                    double price ) {
@@ -84,4 +85,6 @@ public class Product {
     public void setItems(List<Cart_Items> items) {
         this.items = items;
     }
+
+
 }
