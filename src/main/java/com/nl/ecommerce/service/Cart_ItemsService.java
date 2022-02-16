@@ -14,6 +14,7 @@ import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 @Service
 public class Cart_ItemsService {
@@ -76,6 +77,19 @@ public class Cart_ItemsService {
         }
         return ResponseEntity.badRequest().body("The customer does not exist.");
     }
+        public ResponseEntity<?> addQuantity(Long customerId, Long productId, Cart_Items singleCI) {
+
+            Product product = productRepository.findByProductId(productId);
+            Optional<Customer> possibleCustomer = customerRepository.findById(customerId);
+            if (possibleCustomer.isPresent()) {
+                Cart_Items cart_item = cart_itemsRepository.findByCustomerAndProduct(possibleCustomer.get(), product);
+                cart_item.setQuantity(singleCI.getQuantity());
+                cart_itemsRepository.save(cart_item);
+                return ResponseEntity.ok().body("Quantity has been added.");
+            }
+            return ResponseEntity.badRequest().body("Please check the customer id.");
+        }
+
 
 
 

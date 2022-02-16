@@ -1,5 +1,6 @@
 package com.nl.ecommerce.controller;
 
+import com.nl.ecommerce.model.Cart_Items;
 import com.nl.ecommerce.service.Cart_ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,5 +16,12 @@ public class Cart_ItemsController {
     public ResponseEntity<?> addProductToCustomer (@PathVariable("customerId") Long customerId,
                                                    @PathVariable("productId") Long productId){
         return cart_itemsService.addProductToCustomer(customerId, productId);
+    }
+    @PutMapping("/addingQuantity/{customerId}/{productId}")
+    public ResponseEntity<?> addQuantity(@PathVariable("customerId") Long customerId,
+                                         @PathVariable("productId") Long productId,
+                                         @RequestBody Cart_Items singleCI){
+       return cart_itemsService.addQuantity(customerId, productId, singleCI);
+
     }
 }
