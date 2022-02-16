@@ -33,11 +33,8 @@ public class ProductService {
     }
 
     public Product getProductById(Long productId) {
-        Optional<Product> possibleProduct = productRepository.findById(productId);
-        if(possibleProduct.isPresent()){
-            return possibleProduct.get();
-        }
-        return null;
+        Product product = productRepository.findByProductId(productId);
+        return product;
     }
     public ResponseEntity<?> addNewProductToCategory(Long categoryId, Product product) {
         Optional<Category> categoryFromDB = categoryRepository.findById(categoryId);
