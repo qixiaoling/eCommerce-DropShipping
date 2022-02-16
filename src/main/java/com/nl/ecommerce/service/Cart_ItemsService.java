@@ -67,9 +67,10 @@ public class Cart_ItemsService {
             if(cart_item != null){
                 return ResponseEntity.badRequest().body("this product is already added to cart.");
             }else {
-                cart_item.setCustomer(possibleCustomer.get());
-                cart_item.setProduct(product);
-                cart_itemsRepository.save(cart_item);
+                Cart_Items cart_item_added = new Cart_Items(possibleCustomer.get(), product);
+                cart_item_added.setCustomer(possibleCustomer.get());
+                cart_item_added.setProduct(product);
+                cart_itemsRepository.save(cart_item_added);
                 return ResponseEntity.ok().body("The product is now successfully added");
             }
         }
