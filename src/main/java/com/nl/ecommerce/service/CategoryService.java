@@ -38,15 +38,15 @@ public class CategoryService {
         return ResponseEntity.badRequest().body("Please fill in the category name.");
 
     }
-    public Category getCategoryById(Long categoryId){
-        Optional<Category> possibleCategory = categoryRepository.findById(categoryId);
+    public Category getCategoryById(String name){
+        Optional<Category> possibleCategory = categoryRepository.findByName(name);
         if(possibleCategory.isPresent()){
             return possibleCategory.get();
         }
         return null;
     }
-    public ResponseEntity<?> updateCategoryById(Long categoryId, Category category){
-        Optional<Category> possibleCategory = categoryRepository.findById(categoryId);
+    public ResponseEntity<?> updateCategoryById(String name, Category category){
+        Optional<Category> possibleCategory = categoryRepository.findByName(name);
         if(possibleCategory.isPresent()){
            possibleCategory.get().setName(category.getName());
             return ResponseEntity.ok().body("The category is successfully updated.");
@@ -54,10 +54,10 @@ public class CategoryService {
         return ResponseEntity.badRequest().body("Error, this category does not exist.");
 
     }
-    public ResponseEntity<?> deleteCategoryById(Long categoryId) {
-        Optional<Category> possibleCategory = categoryRepository.findById(categoryId);
+    public ResponseEntity<?> deleteCategoryById(String name) {
+        Optional<Category> possibleCategory = categoryRepository.findByName(name);;
         if(possibleCategory.isPresent()){
-            categoryRepository.deleteById(categoryId);
+            categoryRepository.deleteById(name);
             return ResponseEntity.ok().body("The category is deleted successfully.");
         }
         return ResponseEntity.badRequest().body("Please check the category id again.");

@@ -1,15 +1,18 @@
 package com.nl.ecommerce;
 
 import com.nl.ecommerce.model.Cart_Items;
+import com.nl.ecommerce.model.Category;
 import com.nl.ecommerce.model.Customer;
 import com.nl.ecommerce.model.Product;
 import com.nl.ecommerce.repository.Cart_ItemsRepository;
 import com.nl.ecommerce.repository.CustomerRepository;
+import com.nl.ecommerce.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
@@ -24,6 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class eCommerceTest {
     @Autowired
     private Cart_ItemsRepository cart_itemsRepository;
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private TestEntityManager entityManager;
@@ -106,6 +111,19 @@ public class eCommerceTest {
 
 
     }
+//    @Test
+//    public void testAddProductToCategory(){
+//        Product product1 = new Product("cups_blue", "acup", 50, 20.00);
+//        Product product2 = new Product("cups_pink", "acup", 50, 20.00);
+//        Category category = new Category("allCups");
+//
+//       productService.addNewProductToCategory(category.getName(), product1);
+//       productService.addNewProductToCategory(category.getName(), product2);
+//       assertTrue("allCups".equals( product1.getCategory().toString()));
+//
+//
+//
+//    }
 
 
 }

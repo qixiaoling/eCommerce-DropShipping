@@ -36,8 +36,8 @@ public class ProductService {
         Product product = productRepository.findByProductId(productId);
         return product;
     }
-    public ResponseEntity<?> addNewProductToCategory(Long categoryId, Product product) {
-        Optional<Category> categoryFromDB = categoryRepository.findById(categoryId);
+    public ResponseEntity<?> addNewProductToCategory(String name, Product product) {
+        Optional<Category> categoryFromDB = categoryRepository.findByName(name);
         if(categoryFromDB.isPresent()){
             product.setCategory(categoryFromDB.get());
             productRepository.save(product);

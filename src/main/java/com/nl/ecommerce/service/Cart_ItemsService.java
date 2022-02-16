@@ -38,26 +38,44 @@ public class Cart_ItemsService {
         return ResponseEntity.ok().body(cart_items);
     }
 
-    public ResponseEntity<?> addProduct(Long productId, Integer quantity, Long customerId){
+//    public ResponseEntity<?> addProduct(Long productId, Integer quantity, Long customerId){
+//
+//        Product product = productRepository.findByProductId(productId);
+//        Optional<Customer> possibleCustomer = customerRepository.findById(customerId);
+//        if(possibleCustomer.isPresent()){
+//            Cart_Items cart_item = cart_itemsRepository.findByCustomerAndProduct(possibleCustomer.get(), product);
+//            if(cart_item != null){
+//                Integer addedQuantity = cart_item.getQuantity() + quantity;
+//                cart_item.setQuantity(addedQuantity);
+//            }else {
+//                cart_item.setCustomer(possibleCustomer.get());
+//                cart_item.setProduct(product);
+//                cart_item.setQuantity(quantity);
+//            }
+//
+//            cart_itemsRepository.save(cart_item);
+//            return ResponseEntity.ok().body("The product is now successfully added");
+//        }
+//        return ResponseEntity.badRequest().body("The customer does not exist.");
+//    }
+        public ResponseEntity<?> addProductToCustomer(Long customerId, Long productId){
 
         Product product = productRepository.findByProductId(productId);
         Optional<Customer> possibleCustomer = customerRepository.findById(customerId);
         if(possibleCustomer.isPresent()){
             Cart_Items cart_item = cart_itemsRepository.findByCustomerAndProduct(possibleCustomer.get(), product);
             if(cart_item != null){
-                Integer addedQuantity = cart_item.getQuantity() + quantity;
-                cart_item.setQuantity(addedQuantity);
+                return ResponseEntity.badRequest().body("this product is already added to cart.");
             }else {
                 cart_item.setCustomer(possibleCustomer.get());
                 cart_item.setProduct(product);
-                cart_item.setQuantity(quantity);
+                cart_itemsRepository.save(cart_item);
+                return ResponseEntity.ok().body("The product is now successfully added");
             }
-
-            cart_itemsRepository.save(cart_item);
-            return ResponseEntity.ok().body("The product is now successfully added");
         }
         return ResponseEntity.badRequest().body("The customer does not exist.");
     }
+
 
 
 

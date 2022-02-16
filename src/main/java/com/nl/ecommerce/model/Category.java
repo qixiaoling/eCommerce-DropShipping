@@ -6,11 +6,8 @@ import javax.persistence.*;
 import java.util.List;
 @Table
 @Entity
-@EqualsAndHashCode
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long categoryId;
     private String name;
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products;
@@ -20,14 +17,6 @@ public class Category {
 
     public Category(String name) {
         this.name = name;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
     }
 
     public String getName() {
