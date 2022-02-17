@@ -33,11 +33,17 @@ public class Cart_ItemsService {
         this.productRepository = productRepository;
     }
 
-    public ResponseEntity<?> getAllCartItems(Customer customer){
-        List<Cart_Items> cart_items = new ArrayList<>();
-        cart_items.addAll(cart_itemsRepository.findByCustomer(customer));
-        return ResponseEntity.ok().body(cart_items);
+    public ResponseEntity<?> getAllCartItemsByCustomerId(Long customerId){
+        Optional<Customer> possibleCustomer = customerRepository.findById(customerId);
+        if(possibleCustomer.isPresent()){
+            List<Cart_Items> cart_items = new ArrayList<>();
+            cart_items.addAll(cart_itemsRepository.findByCustomer(possibleCustomer.get()));
+            return ResponseEntity.ok().body(cart_items);
+        }else{
+            return ResponseEntity.badRequest().body("Error, customer does not exist.");
+        }
     }
+
 
 //    public ResponseEntity<?> addProduct(Long productId, Integer quantity, Long customerId){
 //

@@ -12,6 +12,11 @@ public class Cart_ItemsController {
     @Autowired
     private Cart_ItemsService cart_itemsService;
 
+    @GetMapping("/getting/{customerId}")
+    public ResponseEntity<?> getAllCartItemsByCustomerId (@PathVariable("customerId") Long customerId){
+        return cart_itemsService.getAllCartItemsByCustomerId(customerId);
+    }
+
     @PostMapping("/adding/{customerId}/{productId}")
     public ResponseEntity<?> addProductToCustomer (@PathVariable("customerId") Long customerId,
                                                    @PathVariable("productId") Long productId){
