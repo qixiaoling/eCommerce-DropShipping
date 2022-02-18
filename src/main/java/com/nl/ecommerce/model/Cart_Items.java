@@ -25,10 +25,10 @@ public class Cart_Items {
     public Cart_Items() {
     }
 
-    public Cart_Items(Integer quantity, Customer customer, Product product) {
-        this.quantity = quantity;
-        this.customer = customer;
+    public Cart_Items( Customer customer, Product product) {
         this.product = product;
+        this.customer = customer;
+
     }
 
     public Long getId() {
