@@ -8,7 +8,7 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private String id;
+    private Long id;
     private String name;
     private String type;
     @Lob
@@ -19,18 +19,17 @@ public class Image {
     public Image() {
     }
 
-    public Image(String id, String name, String type, byte[] data) {
-        this.id = id;
+    public Image(String name, String type, byte[] data) {
         this.name = name;
         this.type = type;
         this.data = data;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -17,7 +17,6 @@ public class Product {
     private String description;
     private int inStock;
     private double price;
-    private Image image;
 
     @ManyToOne
     private Category category;
@@ -105,11 +104,4 @@ public class Product {
         this.items = items;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
 }
