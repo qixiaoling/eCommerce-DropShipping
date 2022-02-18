@@ -96,6 +96,16 @@ public class Cart_ItemsService {
             return ResponseEntity.badRequest().body("Please check the customer id.");
         }
 
+        public ResponseEntity<?> deleteCart_ItemById (Long customerId, Long productId){
+            Product product = productRepository.findByProductId(productId);
+            Optional<Customer> possibleCustomer = customerRepository.findById(customerId);
+            if (possibleCustomer.isPresent()) {
+                cart_itemsRepository.deleteByCustomerAndProduct(possibleCustomer.get(), product);
+                return ResponseEntity.ok().body("This item is now deleted.");
+            }
+            return ResponseEntity.badRequest().body("Please check the customer id.");
+        }
+
 
 
 

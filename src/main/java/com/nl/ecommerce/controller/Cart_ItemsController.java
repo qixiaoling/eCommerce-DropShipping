@@ -29,4 +29,9 @@ public class Cart_ItemsController {
        return cart_itemsService.addQuantity(customerId, productId, singleCI);
 
     }
+    @DeleteMapping("/deleting/{customerId}/{productId}")
+    public ResponseEntity<?> deleteCart_ItemById(@PathVariable("customerId") Long customerId,
+                                                 @PathVariable("productId") Long productId){
+        return cart_itemsService.deleteCart_ItemById(customerId, productId);
+    }
 }
