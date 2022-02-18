@@ -17,9 +17,12 @@ public class Product {
     private String description;
     private int inStock;
     private double price;
+    private Image image;
 
     @ManyToOne
     private Category category;
+    @OneToMany(mappedBy = "product")
+    private List<Image> images = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "product")
@@ -35,6 +38,14 @@ public class Product {
         this.inStock = inStock;
         this.price = price;
 
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public Long getProductId() {
@@ -92,5 +103,13 @@ public class Product {
 
     public void setItems(List<Cart_Items> items) {
         this.items = items;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }
