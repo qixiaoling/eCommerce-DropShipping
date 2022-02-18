@@ -18,11 +18,20 @@ public class ImageController {
     public ImageController(ImageService imageService) {
         this.imageService = imageService;
     }
-@PostMapping("/adding/{productId}")
+    @PostMapping("/adding/{productId}")
     public ResponseEntity<?> addImageToProduct(@PathVariable("productId") Long productId,
                                                @RequestBody MultipartFile file) throws IOException {
         return imageService.addImageToProduct(productId, file);
     }
+    @GetMapping("/getting/{id}")
+    public ResponseEntity<?> getImageById(@PathVariable("id") Long id){
+        return imageService.getImageById(id);
+    }
+    @GetMapping("/gettingbyproductid/{productId}")
+    public ResponseEntity<?> getImageByProductId(@PathVariable("productId") Long productId){
+        return imageService.getImageByProductId(productId);
+    }
+
 
 
 
