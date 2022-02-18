@@ -1,5 +1,6 @@
 package com.nl.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 public class Category {
     @Id
     private String name;
+    @JsonIgnore
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products;
 

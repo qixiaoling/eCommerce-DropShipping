@@ -1,5 +1,8 @@
 package com.nl.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ public class Product {
     @ManyToOne
     private Category category;
 
+    @JsonIgnore
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "product")
     private List<Cart_Items> items = new ArrayList<>();
 
@@ -73,6 +77,7 @@ public class Product {
         this.price = price;
     }
 
+    @JsonBackReference
     public Category getCategory() {
         return category;
     }
