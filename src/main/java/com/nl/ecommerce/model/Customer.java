@@ -1,5 +1,6 @@
 package com.nl.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
@@ -22,6 +23,7 @@ public class Customer {
     private String email;
     private String phoneNumber;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
     private List<Cart_Items> items = new ArrayList<>();
 
