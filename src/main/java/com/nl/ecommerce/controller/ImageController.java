@@ -15,22 +15,31 @@ public class ImageController {
     @Autowired
     ImageService imageService;
 
-    public ImageController(ImageService imageService) {
-        this.imageService = imageService;
+    @PostMapping("/uploading")
+    public String saveImages(@RequestParam("image") MultipartFile[] images){
+        for (MultipartFile image: images){
+            imageService.saveImages(image);
+        }
+        return "redirect:/";
     }
-    @PostMapping("/adding/{productId}")
-    public ResponseEntity<?> addImageToProduct(@PathVariable("productId") Long productId,
-                                               @RequestBody MultipartFile file) throws IOException {
-        return imageService.addImageToProduct(productId, file);
-    }
-    @GetMapping("/getting/{id}")
-    public ResponseEntity<?> getImageById(@PathVariable("id") Long id){
-        return imageService.getImageById(id);
-    }
-    @GetMapping("/gettingbyproductid/{productId}")
-    public ResponseEntity<?> getImageByProductId(@PathVariable("productId") Long productId){
-        return imageService.getImageByProductId(productId);
-    }
+
+//    public ImageController(ImageService imageService) {
+//        this.imageService = imageService;
+//    }
+//    @PostMapping("/adding/{productId}")
+//    public ResponseEntity<?> addImageToProduct(@PathVariable("productId") Long productId,
+//                                               @RequestParam("img") MultipartFile file) throws IOException {
+//        return imageService.addImageToProduct(productId, file);
+//    }
+//    @GetMapping("/getting/{id}")
+//    public ResponseEntity<?> getImageById(@PathVariable("id") Long id){
+//        return imageService.getImageById(id);
+//    }
+//
+//    @GetMapping("/gettingbyproductid/{productId}")
+//    public ResponseEntity<?> getImageByProductId(@PathVariable("productId") Long productId){
+//        return imageService.getImageByProductId(productId);
+//    }
 
 
 
