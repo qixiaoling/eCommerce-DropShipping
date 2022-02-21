@@ -11,12 +11,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.*;
+import java.io.IOException;
 import java.util.List;
 
 @SpringBootApplication
 public class EcommerceApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 
 		SpringApplication.run(EcommerceApplication.class, args);
 	}
