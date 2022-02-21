@@ -13,8 +13,8 @@ public class Image {
     private String type;
     @Lob
     private byte[] data;
-//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    private Product product;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Product product;
 
     public Image() {
     }
@@ -57,11 +57,11 @@ public class Image {
         this.data = data;
     }
 
-//    public Product getProduct() {
-//        return product;
-//    }
-//
-//    public void setProduct(Product product) {
-//        this.product = product;
-//    }
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }
