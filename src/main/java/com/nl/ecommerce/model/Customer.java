@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.web.WebProperties;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -22,6 +23,14 @@ public class Customer {
     private String address_country;
     private String email;
     private String phoneNumber;
+    private String username;
+    private String password;
+    @ManyToMany (fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @JoinTable(
+            joinColumns = { @JoinColumn },
+            inverseJoinColumns = {@JoinColumn}
+    )
+    private Set<Role> roles;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
@@ -40,6 +49,13 @@ public class Customer {
     }
 
     public Customer() {
+    }
+
+    public Customer(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+
     }
 
     public Long getCustomerId() {
@@ -120,5 +136,29 @@ public class Customer {
 
     public void setItems(List<Cart_Items> items) {
         this.items = items;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

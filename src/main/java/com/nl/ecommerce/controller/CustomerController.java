@@ -22,8 +22,8 @@ public class CustomerController {
     public ResponseEntity<?> getAllCategory(){
         return customerService.getAllCustomers();
     }
-    @PostMapping("/adding")
-    public ResponseEntity<?> addCategory(@RequestBody Customer customer){
-        return customerService.addCustomer(customer);
-    }
+//    @PostMapping("/signup")
+//    public ResponseEntity<?> registerCustomer(@RequestBody Customer customer){
+//        return customerService.registerCustomer(customer);
+//    }
 }
