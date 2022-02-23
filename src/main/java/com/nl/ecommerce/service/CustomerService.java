@@ -43,7 +43,7 @@ public class CustomerService {
         return ResponseEntity.ok().body(customers);
     }
     public ResponseEntity<?> registerCustomer(@Valid SignupRequest signupRequest) {
-       if(Boolean.TRUE.equals(customerRepository.existsByUsername(signupRequest.getUsername()))){
+       if(Boolean.TRUE.equals(customerRepository.existsByUserName(signupRequest.getUsername()))){
            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
        }
 

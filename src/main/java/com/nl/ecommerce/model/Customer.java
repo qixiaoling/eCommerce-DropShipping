@@ -1,8 +1,7 @@
 package com.nl.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-import org.springframework.boot.autoconfigure.web.WebProperties;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class Customer {
     private String address_country;
     private String email;
     private String phoneNumber;
-    private String username;
+    private String userName;
     private String password;
     @ManyToMany (fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinTable(
@@ -51,8 +50,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String username, String email, String password) {
-        this.username = username;
+    public Customer(String userName, String email, String password) {
+        this.userName = userName;
         this.email = email;
         this.password = password;
 
@@ -138,12 +137,12 @@ public class Customer {
         this.items = items;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
