@@ -7,6 +7,7 @@ import com.nl.ecommerce.service.CategoryService;
 import com.nl.ecommerce.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +22,7 @@ public class CustomerController {
     }
 
     @PostMapping("/signup")
+    @PreAuthorize("hasAnyAuthority('USER','MOD','ADMIN')")
     public ResponseEntity<?> registerCustomer(@RequestBody SignupRequest signupRequest){
         return customerService.registerCustomer(signupRequest);
     }
