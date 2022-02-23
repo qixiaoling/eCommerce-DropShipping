@@ -10,7 +10,7 @@ import java.util.Set;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long role_id;
+    private Long id;
     @Column
     @Enumerated(EnumType.STRING)
     private ApplicationUserRole roleName;
@@ -20,17 +20,17 @@ public class Role {
     public Role() {
     }
 
-    public Role(Long role_id, ApplicationUserRole roleName) {
-        this.role_id = role_id;
+    public Role(Long id, ApplicationUserRole roleName) {
+        this.id = id;
         this.roleName = roleName;
     }
 
-    public long getRole_id() {
-        return role_id;
+    public long getId() {
+        return id;
     }
 
-    public void setRole_id(Long role_id) {
-        this.role_id = role_id;
+    public void setId(Long role_id) {
+        this.id = id;
     }
 
     public ApplicationUserRole getRoleName() {

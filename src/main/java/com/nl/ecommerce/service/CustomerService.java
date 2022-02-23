@@ -19,6 +19,8 @@ import java.util.*;
 
 @Service
 public class CustomerService {
+    private static final String ROLE_NOT_FOUND_ERROR = "Error: Role is not found.";
+
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -41,11 +43,11 @@ public class CustomerService {
         return ResponseEntity.ok().body(customers);
     }
     public ResponseEntity<?> registerCustomer(@Valid SignupRequest signupRequest) {
-       if(Boolean.TRUE.equals(customerRepository.existByUsername(signupRequest.getUsername()))){
+       if(Boolean.TRUE.equals(customerRepository.existsByUsername(signupRequest.getUsername()))){
            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
        }
 
-       if(Boolean.TRUE.equals(customerRepository.existByEmail(signupRequest.getEmail()))){
+       if(Boolean.TRUE.equals(customerRepository.existsByEmail(signupRequest.getEmail()))){
            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
        }
 
@@ -58,25 +60,25 @@ public class CustomerService {
        Set<Role> roles = new HashSet<>();
 
        if(strRoles == null) {
-           Role userRole = roleRepository.findByName(ApplicationUserRole.USER)
-                   .orElseThrow(()-> new RuntimeException());
+           Role userRole = roleRepository.findByRoleName(ApplicationUserRole.USER)
+                   .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
            roles.add(userRole);
        }else {
            strRoles.forEach(role->{
                switch (role) {
                    case "ADMIN":
-                       Role adminRole = roleRepository.findByName(ApplicationUserRole.ADMIN)
-                               .orElseThrow(()-> new RuntimeException());
+                       Role adminRole = roleRepository.findByRoleName(ApplicationUserRole.ADMIN)
+                               .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                        roles.add(adminRole);
                    case "mod":
-                       Role modRole = roleRepository.findByName(ApplicationUserRole.MOD)
-                               .orElseThrow(() -> new RuntimeException());
+                       Role modRole = roleRepository.findByRoleName(ApplicationUserRole.MOD)
+                               .orElseThrow(() -> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                        roles.add(modRole);
 
                        break;
                    default:
-                       Role userRole = roleRepository.findByName(ApplicationUserRole.USER)
-                               .orElseThrow(() -> new RuntimeException());
+                       Role userRole = roleRepository.findByRoleName(ApplicationUserRole.USER)
+                               .orElseThrow(() -> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                        roles.add(userRole);
                }
            });
