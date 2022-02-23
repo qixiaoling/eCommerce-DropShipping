@@ -60,25 +60,22 @@ public class CustomerService {
        Set<Role> roles = new HashSet<>();
 
        if(strRoles == null) {
-           Role userRole = roleRepository.findByRoleName(ApplicationUserRole.USER)
-                   .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
+           Role userRole = roleRepository.findByRoleName(ApplicationUserRole.USER);
            roles.add(userRole);
        }else {
            strRoles.forEach(role->{
                switch (role) {
                    case "ADMIN":
-                       Role adminRole = roleRepository.findByRoleName(ApplicationUserRole.ADMIN)
-                               .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
+                       Role adminRole = roleRepository.findByRoleName(ApplicationUserRole.ADMIN);
                        roles.add(adminRole);
+                       break;
                    case "mod":
-                       Role modRole = roleRepository.findByRoleName(ApplicationUserRole.MOD)
-                               .orElseThrow(() -> new RuntimeException(ROLE_NOT_FOUND_ERROR));
+                       Role modRole = roleRepository.findByRoleName(ApplicationUserRole.MOD);
                        roles.add(modRole);
 
                        break;
                    default:
-                       Role userRole = roleRepository.findByRoleName(ApplicationUserRole.USER)
-                               .orElseThrow(() -> new RuntimeException(ROLE_NOT_FOUND_ERROR));
+                       Role userRole = roleRepository.findByRoleName(ApplicationUserRole.USER);
                        roles.add(userRole);
                }
            });

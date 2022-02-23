@@ -22,7 +22,6 @@ public class CustomerController {
     }
 
     @PostMapping("/signup")
-    @PreAuthorize("hasAnyAuthority('USER','MOD','ADMIN')")
     public ResponseEntity<?> registerCustomer(@RequestBody SignupRequest signupRequest){
         return customerService.registerCustomer(signupRequest);
     }

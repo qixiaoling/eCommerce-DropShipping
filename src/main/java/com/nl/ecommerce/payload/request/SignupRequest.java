@@ -1,4 +1,6 @@
 package com.nl.ecommerce.payload.request;
+import com.nl.ecommerce.security_config.ApplicationUserRole;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
