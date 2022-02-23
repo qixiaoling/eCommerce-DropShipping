@@ -15,17 +15,7 @@ public class ImageController {
     @Autowired
     ImageService imageService;
 
-//    @PostMapping("/uploading")
-//    public String saveImages(@RequestParam("image") MultipartFile[] images){
-//        for (MultipartFile image: images){
-//            imageService.saveImages(image);
-//        }
-//        return "redirect:/";
-//    }
 
-//    public ImageController(ImageService imageService) {
-//        this.imageService = imageService;
-//    }
     @PostMapping("/uploading/{productId}")
     public ResponseEntity<?> addImageToProduct(@PathVariable("productId") Long productId,
                                                @RequestParam("files") MultipartFile[] files) throws IOException {
