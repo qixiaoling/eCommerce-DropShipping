@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
+//will do the autowire
 class CategoryRepositoryTest {
     @Autowired
     private CategoryRepository underTest;
