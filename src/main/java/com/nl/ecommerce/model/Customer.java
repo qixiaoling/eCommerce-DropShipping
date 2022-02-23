@@ -1,12 +1,12 @@
 package com.nl.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-import org.springframework.boot.autoconfigure.web.WebProperties;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -22,6 +22,14 @@ public class Customer {
     private String address_country;
     private String email;
     private String phoneNumber;
+    private String userName;
+    private String password;
+    @ManyToMany (fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @JoinTable(
+            joinColumns = { @JoinColumn },
+            inverseJoinColumns = {@JoinColumn}
+    )
+    private Set<Role> roles;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
@@ -40,6 +48,13 @@ public class Customer {
     }
 
     public Customer() {
+    }
+
+    public Customer(String userName, String email, String password) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+
     }
 
     public Long getCustomerId() {
@@ -120,5 +135,29 @@ public class Customer {
 
     public void setItems(List<Cart_Items> items) {
         this.items = items;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUsername(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

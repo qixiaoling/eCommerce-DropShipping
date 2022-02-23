@@ -1,19 +1,36 @@
 package com.nl.ecommerce.service;
 
 import com.nl.ecommerce.model.Customer;
+import com.nl.ecommerce.model.Role;
+import com.nl.ecommerce.payload.request.SignupRequest;
+import com.nl.ecommerce.payload.response.MessageResponse;
 import com.nl.ecommerce.repository.CustomerRepository;
+import com.nl.ecommerce.repository.RoleRepository;
+import com.nl.ecommerce.security_config.ApplicationUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import javax.validation.Valid;
+import java.util.*;
 
 @Service
 public class CustomerService {
+    private static final String ROLE_NOT_FOUND_ERROR = "Error: Role is not found.";
+
+
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository) {
@@ -25,17 +42,51 @@ public class CustomerService {
         customerRepository.findAll().forEach(customers::add);
         return ResponseEntity.ok().body(customers);
     }
-    public ResponseEntity<?> addCustomer(Customer customer){
-        if(!(customer.getEmail() == null)) {
-            if(customerRepository.existsByEmail(customer.getEmail()).equals(Boolean.FALSE)) {
-                customerRepository.save(customer);
-                return ResponseEntity.ok().body("The customer is now added");
-            }else{
-                return ResponseEntity.badRequest().body("Error, this customer already exists");
-            }
-        }
-        return ResponseEntity.badRequest().body("Please fill in the email.");
-    }
+    public ResponseEntity<?> registerCustomer(@Valid SignupRequest signupRequest) {
+       if(Boolean.TRUE.equals(customerRepository.existsByUserName(signupRequest.getUsername()))){
+           return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+       }
+
+       if(Boolean.TRUE.equals(customerRepository.existsByEmail(signupRequest.getEmail()))){
+           return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
+       }
+
+       Customer customer = new Customer(signupRequest.getUsername(),
+               signupRequest.getEmail(),
+               passwordEncoder().encode(signupRequest.getPassword())
+       );
+
+       Set<String> strRoles = signupRequest.getRole();
+       Set<Role> roles = new HashSet<>();
+
+       if(strRoles == null) {
+           Role userRole = roleRepository.findByRoleName(ApplicationUserRole.USER);
+           roles.add(userRole);
+       }else {
+           strRoles.forEach(role->{
+               switch (role) {
+                   case "ADMIN":
+                       Role adminRole = roleRepository.findByRoleName(ApplicationUserRole.ADMIN);
+                       roles.add(adminRole);
+                       break;
+                   case "mod":
+                       Role modRole = roleRepository.findByRoleName(ApplicationUserRole.MOD);
+                       roles.add(modRole);
+
+                       break;
+                   default:
+                       Role userRole = roleRepository.findByRoleName(ApplicationUserRole.USER);
+                       roles.add(userRole);
+               }
+           });
+       }
+       customer.setRoles(roles);
+       customerRepository.save(customer);
+
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+
+       }
+
     public Customer getCustomerById(Long customerId){
         Optional<Customer> possibleCustomer = customerRepository.findById(customerId);
         if(possibleCustomer.isPresent()){
@@ -43,6 +94,7 @@ public class CustomerService {
         }
         return null;
     }
+
     public ResponseEntity<?> updateCustomerById(Long customerId, Customer customer){
         Optional<Customer> possibleCustomer = customerRepository.findById(customerId);
         if(possibleCustomer.isPresent()){
