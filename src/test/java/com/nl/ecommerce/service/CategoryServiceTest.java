@@ -1,5 +1,7 @@
 package com.nl.ecommerce.service;
 
+import com.nl.ecommerce.Exception.BadRequestException;
+import com.nl.ecommerce.Exception.NotFoundException;
 import com.nl.ecommerce.model.Category;
 import com.nl.ecommerce.repository.CategoryRepository;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -8,10 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 
 
+
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 
@@ -65,14 +67,11 @@ class CategoryServiceTest {
         BDDMockito.given( categoryRepository.existsByName(category.getName())).willReturn(true);
         //when
         //then
-        AssertionsForClassTypes.assertThatThrownBy(underTest.addCategory(category))
-                .isInstanceOf(ResponseEntity.badRequest())
-                .hasMessageContaining("Error, this category already exists.");
+        AssertionsForClassTypes.assertThatThrownBy(()-> underTest.addCategory(category))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("category name: " + category.getName() + "taken");
 
-
-
-
-
+        verify(categoryRepository, never()).save(category);
 
     }
 
@@ -90,5 +89,27 @@ class CategoryServiceTest {
     @Test
     @Disabled
     void deleteCategoryById() {
+        //given
+        String name = "testCups";
+        BDDMockito.given( categoryRepository.existsByName(name)).willReturn(true);
+        //when
+        underTest.deleteCategoryById(name);
+        //then
+        verify(categoryRepository).deleteById(name);
+    }
+
+    @Test
+    void willThrowWhenDeleteCategoryNotFound(){
+        //given
+        String name = "testCups";
+        BDDMockito.given(categoryRepository.existsByName(name)).willReturn(false);
+        //when
+        //then
+        AssertionsForClassTypes.assertThatThrownBy(()-> underTest.deleteCategoryById(name))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("Category name: " + name + "does not exists.");
+
+        verify(categoryRepository,never()).deleteById(name);
+
     }
 }
