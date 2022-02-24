@@ -61,7 +61,7 @@ class CategoryServiceTest {
 
     }
     @Test
-    void willThrowWhenEmailIsTaken() {
+    void willThrowWhenCategoryNameIsTaken() {
         //given
         Category category = new Category("testCups");
         BDDMockito.given( categoryRepository.existsByName(category.getName())).willReturn(true);
