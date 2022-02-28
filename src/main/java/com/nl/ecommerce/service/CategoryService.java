@@ -1,5 +1,7 @@
 package com.nl.ecommerce.service;
 
+import com.nl.ecommerce.Exception.BadRequestException;
+import com.nl.ecommerce.Exception.NotFoundException;
 import com.nl.ecommerce.model.Category;
 import com.nl.ecommerce.model.Customer;
 import com.nl.ecommerce.repository.CategoryRepository;
@@ -27,15 +29,27 @@ public class CategoryService {
     }
     public ResponseEntity<?> addCategory(Category category) {
         if(!(category.getName() == null)){
-            if(categoryRepository.existsByName(category.getName()).equals(Boolean.FALSE)){
-                categoryRepository.save(category);
-                return ResponseEntity.ok().body("The category is now added.");
-            }else{
-                return ResponseEntity.badRequest().body("Error, this category already exists.");
-
+            Boolean existsName = categoryRepository.existsByName(category.getName());
+            if(existsName) {
+                throw new BadRequestException(
+                        "category name: " + category.getName() + "taken");
             }
+            categoryRepository.save(category);
+            return ResponseEntity.ok().body("The category is now added.");
         }
         return ResponseEntity.badRequest().body("Please fill in the category name.");
+
+
+//        if(!(category.getName() == null)){
+//            if(categoryRepository.existsByName(category.getName()).equals(Boolean.FALSE)){
+//                categoryRepository.save(category);
+//                return ResponseEntity.ok().body("The category is now added.");
+//            }else{
+//                return ResponseEntity.badRequest().body("Error, this category already exists.");
+//
+//            }
+//        }
+//        return ResponseEntity.badRequest().body("Please fill in the category name.");
 
     }
     public Category getCategoryById(String name){
@@ -55,13 +69,20 @@ public class CategoryService {
 
     }
     public ResponseEntity<?> deleteCategoryById(String name) {
-        Optional<Category> possibleCategory = categoryRepository.findByName(name);;
-        if(possibleCategory.isPresent()){
-            categoryRepository.deleteById(name);
-            return ResponseEntity.ok().body("The category is deleted successfully.");
+        if (!categoryRepository.existsByName(name)) {
+            throw new NotFoundException(
+                    "Category name: " + name + "does not exists.");
         }
-        return ResponseEntity.badRequest().body("Please check the category id again.");
+        categoryRepository.deleteById(name);
+        return ResponseEntity.ok().body("The category is now deleted.");
 
-
+//        categoryRepository.deleteById(name);
+//        return ResponseEntity.ok().body("The category is now deleted.");
+//        Optional<Category> possibleCategory = categoryRepository.findByName(name);;
+//        if(possibleCategory.isPresent()){
+//            categoryRepository.deleteById(name);
+//            return ResponseEntity.ok().body("The category is deleted successfully.");
+//        }
+//        return ResponseEntity.badRequest().body("Please check the category id again.");again
     }
 }
